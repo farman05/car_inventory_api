@@ -16,7 +16,6 @@ Class Manufacturer_model extends CI_Model{
                     'name'=>$data['name'],
                     'added_on'=>date('Y-m-d H:i:s')
                 );
-
                 if($this->db->insert('manufacturers',$insertData)){
                 return response(true,'Manufacturer Added successfully','','model');
                 }
