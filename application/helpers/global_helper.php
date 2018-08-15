@@ -18,6 +18,10 @@ function pr($data){
 }
 
 function chkRequestType($type){
+  if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+      die();
+
+  }
 
 	if ($_SERVER['REQUEST_METHOD'] === $type) {
 		return true;
@@ -42,7 +46,7 @@ function getData($tableName,$type='row',$select = '',$whereCondition=array()){
        			$CI->db->where($key,$value);
        		}
        	}
-
+        $CI->db->order_by('id','desc');
        	if($type=='row'){
        		return $CI->db->get($tableName)->row_array();
        	}else{

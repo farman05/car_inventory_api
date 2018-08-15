@@ -25,6 +25,7 @@ class Manufacturer extends CI_Controller {
     //create manufacturer
 
     function createManufacturer(){
+       
         if(chkRequestType('POST')){
         $json = file_get_contents("php://input");
         $data = json_decode($json,true);

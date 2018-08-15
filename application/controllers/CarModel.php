@@ -10,13 +10,15 @@ class CarModel extends CI_Controller {
     }
 
     function createModel(){
-
+		
     	 if(chkRequestType('POST')){
-	       
-	        $uploadImage = $this->uploadImage($_FILES['myFile']);
-	        if(!empty($uploadImage['status'])){
-	        	$imageName = $uploadImage['filename'];
-	        	$result = $this->CarModel_model->createModel($this->input->post(),$imageName);	
+
+    		$json = file_get_contents("php://input");
+    		$data = json_decode($json,true);
+    		$imageName = $this->base64ToImage($data['file']);
+	        if(!empty($imageName)){
+        		unset($data['file']);
+	        	$result = $this->CarModel_model->createModel($data,$imageName);	
 	        	if(!empty($result)){
            		 	echo response(true,'Model Added successfully','');
 	        	}else{
@@ -92,6 +94,21 @@ class CarModel extends CI_Controller {
 
 	}
 
+	function base64ToImage($imageData){
+	    $data = 'data:image/png;base64,AAAFBfj42Pj4';
+	    list($type, $imageData) = explode(';', $imageData);
+	    list(,$extension) = explode('/',$type);
+	    list(,$imageData)      = explode(',', $imageData);
+		$target_dir =  FCPATH.'assets/images/';
+	    $fileName = uniqid().'.'.$extension;
+	    $imageData = base64_decode($imageData);
+	    $directory = $target_dir.$fileName;
+	    file_put_contents($directory, $imageData);
+	    return $fileName;
+	}
+
+
 }
+
 
 

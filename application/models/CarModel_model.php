@@ -36,6 +36,7 @@ class CarModel_model extends CI_Model{
     	$this->db->join('manufacturers','manufacturers.id = models.manufacturer_id');
     	$this->db->join('colors','colors.id = models.color_id');
     	$this->db->join('model_images','model_images.model_id = models.id');
+        $this->db->order_by('models.id','desc');
     	return $this->db->get_where('models',array('quantity >'=>0))->result_array();
 
 

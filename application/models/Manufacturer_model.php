@@ -5,7 +5,7 @@ Class Manufacturer_model extends CI_Model{
 
         function getAllManufacturers(){
 
-            return $this->db->get_where('manufacturers',array('is_deleted'=>0))->result_array();
+            return $this->db->get_where('manufacturers',array('is_deleted'=>0))->order_by('id','desc')->result_array();
         }
 
 
